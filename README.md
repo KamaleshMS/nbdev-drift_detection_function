@@ -20,4 +20,3 @@ Fill me in please! Don’t forget code examples:
 ```
 
     2
-"# nbdev-drift_detection_function" 
