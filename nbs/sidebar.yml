@@ -3,3 +3,7 @@ website:
     contents:
       - index.ipynb
       - Data_Drift_Function.ipynb
+      - nbdev_tutorial.ipynb
+      - section: Images
+        contents:
+          - Images\Untitled.ipynb
