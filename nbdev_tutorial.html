@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Welcome to this tutorial on getting started with nbdev! In this tutorial, we will cover the basics of nbdev, a powerful tool for developing Python libraries in Jupyter notebooks. By the end of this tutorial, you’ll have a good understanding of how to create, test, document, and publish your Python library using nbdev.">
+
+<title>nbdev-drift_detection_function - Getting Started with nbdev: A Beginner’s Tutorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="nbdev-drift_detection_function - Getting Started with nbdev: A Beginner’s Tutorial">
+<meta property="og:description" content="Welcome to this tutorial on getting started with nbdev! In this tutorial, we will cover the basics of nbdev, a powerful tool for developing Python libraries in Jupyter notebooks. By the end of this tutorial, you’ll have a good understanding of how to create, test, document, and publish your Python library using nbdev.">
+<meta property="og:image" content="https://KamaleshMS.github.io/nbdev-drift_detection_function/github-create-new-repo.png">
+<meta property="og:site-name" content="nbdev-drift_detection_function">
+<meta property="og:image:height" content="1583">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="nbdev-drift_detection_function - Getting Started with nbdev: A Beginner’s Tutorial">
+<meta name="twitter:description" content="Welcome to this tutorial on getting started with nbdev! In this tutorial, we will cover the basics of nbdev, a powerful tool for developing Python libraries in Jupyter notebooks. By the end of this tutorial, you’ll have a good understanding of how to create, test, document, and publish your Python library using nbdev.">
+<meta name="twitter:image" content="https://KamaleshMS.github.io/nbdev-drift_detection_function/github-create-new-repo.png">
+<meta name="twitter:image-height" content="1583">
+<meta name="twitter:image-width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">nbdev-drift_detection_function</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./nbdev_tutorial.html">Getting Started with nbdev: A Beginner’s Tutorial</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">nbdev-drift_detection_function</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Data_Drift_Function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Drift Function</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nbdev_tutorial.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Getting Started with nbdev: A Beginner’s Tutorial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">nbs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nbs/core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation </a><a id="installation" class="nav-link" data-scroll-target="undefined"></a>
+  <ul class="collapse">
+  <li><a href="#install-python" id="toc-install-python" class="nav-link" data-scroll-target="#install-python">Install Python </a><a id="step-1-install-python" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#a-python-package-manager-we-recommend-conda-or-pip" id="toc-a-python-package-manager-we-recommend-conda-or-pip" class="nav-link" data-scroll-target="#a-python-package-manager-we-recommend-conda-or-pip">A Python package manager: We recommend conda or pip </a><a id="step-2-choose-a-python-package-manager" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#install-jupyter-notebook" id="toc-install-jupyter-notebook" class="nav-link" data-scroll-target="#install-jupyter-notebook">Install Jupyter Notebook </a><a id="step-3-install-jupyter-notebook" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#launch-jupyter-notebook" id="toc-launch-jupyter-notebook" class="nav-link" data-scroll-target="#launch-jupyter-notebook">Launch Jupyter Notebook </a><a id="step-4-launch-jupyter-notebook" class="nav-link" data-scroll-target="undefined"></a></li>
+  </ul></li>
+  <li><a href="#installation-and-setup-of-nbdev-quarto" id="toc-installation-and-setup-of-nbdev-quarto" class="nav-link" data-scroll-target="#installation-and-setup-of-nbdev-quarto">Installation and Setup of nbdev, Quarto</a>
+  <ul class="collapse">
+  <li><a href="#install-nbdev" id="toc-install-nbdev" class="nav-link" data-scroll-target="#install-nbdev">Install nbdev </a><a id="step-1-install-nbdev" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#set-up-nbdev" id="toc-set-up-nbdev" class="nav-link" data-scroll-target="#set-up-nbdev">Set up nbdev </a><a id="step-2-set-up-nbdev" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#install-quarto" id="toc-install-quarto" class="nav-link" data-scroll-target="#install-quarto">Install Quarto </a><a id="step-3-install-quarto" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#set-up-quarto-with-jupyterlab" id="toc-set-up-quarto-with-jupyterlab" class="nav-link" data-scroll-target="#set-up-quarto-with-jupyterlab">Set up Quarto with JupyterLab </a><a id="step-4-set-up-quarto-with-jupyterlab" class="nav-link" data-scroll-target="undefined"></a></li>
+  </ul></li>
+  <li><a href="#create-an-empty-github-repo" id="toc-create-an-empty-github-repo" class="nav-link" data-scroll-target="#create-an-empty-github-repo">Create an Empty GitHub Repo </a><a id="create-repo" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#initialize-your-repo-with-nbdev" id="toc-initialize-your-repo-with-nbdev" class="nav-link" data-scroll-target="#initialize-your-repo-with-nbdev">Initialize Your Repo with nbdev </a><a id="initialize-repo" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#enable-github-pages" id="toc-enable-github-pages" class="nav-link" data-scroll-target="#enable-github-pages">Enable GitHub Pages </a><a id="enable-pages" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#check-out-your-workflows" id="toc-check-out-your-workflows" class="nav-link" data-scroll-target="#check-out-your-workflows">Check Out Your Workflows </a><a id="check-workflows" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#check-out-your-docs" id="toc-check-out-your-docs" class="nav-link" data-scroll-target="#check-out-your-docs">Check Out Your Docs </a><a id="check-docs" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#set-up-autoreload" id="toc-set-up-autoreload" class="nav-link" data-scroll-target="#set-up-autoreload">Set up Autoreload </a><a id="autoreload" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#set-up-prerequisites" id="toc-set-up-prerequisites" class="nav-link" data-scroll-target="#set-up-prerequisites">Set up Prerequisites </a><a id="prerequisites" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#make-your-first-edit" id="toc-make-your-first-edit" class="nav-link" data-scroll-target="#make-your-first-edit">Make Your First Edit </a><a id="first-edit" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#edit-00_core.ipynb" id="toc-edit-00_core.ipynb" class="nav-link" data-scroll-target="#edit-00_core.ipynb">Edit 00_core.ipynb </a><a id="edit-core" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#add-your-own-function" id="toc-add-your-own-function" class="nav-link" data-scroll-target="#add-your-own-function">Add Your Own Function </a><a id="add-function" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#add-examples-tests-and-docs" id="toc-add-examples-tests-and-docs" class="nav-link" data-scroll-target="#add-examples-tests-and-docs">Add Examples, Tests, and Docs </a><a id="add-examples-tests-docs" class="nav-link" data-scroll-target="undefined"></a>
+  <ul class="collapse">
+  <li><a href="#calculate_total_cost" id="toc-calculate_total_cost" class="nav-link" data-scroll-target="#calculate_total_cost">calculate_total_cost</a></li>
+  </ul></li>
+  <li><a href="#prepare-your-changes" id="toc-prepare-your-changes" class="nav-link" data-scroll-target="#prepare-your-changes">Prepare Your Changes </a><a id="prepare-changes" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#common-errors-and-their-solutions" id="toc-common-errors-and-their-solutions" class="nav-link" data-scroll-target="#common-errors-and-their-solutions">Common Errors and their Solutions </a><a id="error" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#video-tutorial-for-nbdev-documentation" id="toc-video-tutorial-for-nbdev-documentation" class="nav-link" data-scroll-target="#video-tutorial-for-nbdev-documentation">Video Tutorial for nbdev Documentation </a><a id="video-tutorial" class="nav-link" data-scroll-target="undefined"></a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/KamaleshMS/nbdev-drift_detection_function/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Getting Started with nbdev: A Beginner’s Tutorial</h1>
+</div>
+
+<div>
+  <div class="description">
+    Welcome to this tutorial on getting started with nbdev! In this tutorial, we will cover the basics of nbdev, a powerful tool for developing Python libraries in Jupyter notebooks. By the end of this tutorial, you’ll have a good understanding of how to create, test, document, and publish your Python library using nbdev.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation <a id="installation"></a></h2>
+<blockquote class="blockquote">
+<p>To get started with nbdev, you need to install a few prerequisites. Follow these steps to install the required tools and libraries:</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li><a href="#step-1-install-python">Install Python</a></li>
+<li><a href="#step-2-choose-a-python-package-manager">Choose a Python Package Manager</a></li>
+<li><a href="#step-3-install-jupyter-notebook">Install Jupyter Notebook</a></li>
+<li><a href="#step-4-launch-jupyter-notebook">Launch Jupyter Notebook</a></li>
+</ul>
+</blockquote>
+<section id="install-python" class="level3">
+<h3 class="anchored" data-anchor-id="install-python">Install Python <a id="step-1-install-python"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>Install Python by visiting the official Python website: <a href="https://www.python.org/downloads/">python.org</a>.</li>
+</ul>
+</blockquote>
+</section>
+<section id="a-python-package-manager-we-recommend-conda-or-pip" class="level3">
+<h3 class="anchored" data-anchor-id="a-python-package-manager-we-recommend-conda-or-pip">A Python package manager: We recommend conda or pip <a id="step-2-choose-a-python-package-manager"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>Choose a Python package manager based on your preferences and requirements.</li>
+</ul>
+</blockquote>
+</section>
+<section id="install-jupyter-notebook" class="level3">
+<h3 class="anchored" data-anchor-id="install-jupyter-notebook">Install Jupyter Notebook <a id="step-3-install-jupyter-notebook"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>Install Jupyter Notebook using the selected package manager:</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Code Cell (for conda):</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>conda install <span class="op">-</span>c conda<span class="op">-</span>forge <span class="op">-</span>y jupyterlab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Code Cell (for pip):</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install jupyterlab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="launch-jupyter-notebook" class="level3">
+<h3 class="anchored" data-anchor-id="launch-jupyter-notebook">Launch Jupyter Notebook <a id="step-4-launch-jupyter-notebook"></a></h3>
+<blockquote class="blockquote">
+<p>Launch Jupyter Notebook by running the following command in a terminal or command prompt:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>jupyter lab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>I have used <code>!</code> or <code>%</code> in every code cells. But it is not necessary for you to use them if these commands are executed in your terminal and not from jupyter notebook.</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>The exclamation mark (<code>!</code>) before a command in Jupyter Notebook represents a “magic command.” Magic commands are special commands provided by IPython, the interactive Python kernel used by Jupyter Notebook.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>The exclamation mark is used to indicate that the command should be executed in a system shell or command-line interface, rather than within the Python kernel.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>When you prefix a line with <code>!</code> in a code cell, Jupyter Notebook sends that line to the system shell for execution. It allows you to run system commands, install packages, execute shell scripts, and perform other shell-related operations directly from your notebook.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>For example, when you run <code>!</code>pip install numpy, Jupyter Notebook executes the command pip install numpy in the system shell, installing the numpy package.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Magic commands in Jupyter Notebook provide additional functionality and convenience for interacting with the underlying system and enhancing the notebook experience. They are called “magic” because they provide a special syntax and perform tasks beyond the standard Python execution.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>There are two types of magic commands in Jupyter Notebook:</p>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Line magics: Line magics start with a single <code>%</code> character and are used for a single line of execution.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Cell magics: Cell magics start with <code>%%</code> and are used for entire code cells.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>The exclamation mark (<code>!</code>) is a shorthand notation for using line magics in Jupyter Notebook. It allows you to execute system shell commands conveniently within your notebook.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<p>By using magic commands, you can seamlessly integrate system commands and Python code within your notebook, making it a versatile tool for interactive computing and data analysis.</p>
+</blockquote>
+</section>
+</section>
+<section id="installation-and-setup-of-nbdev-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="installation-and-setup-of-nbdev-quarto">Installation and Setup of nbdev, Quarto</h2>
+<blockquote class="blockquote">
+<ul>
+<li><a href="#step-1-install-nbdev">Install nbdev</a></li>
+<li><a href="#step-2-set-up-nbdev">Set up nbdev</a></li>
+<li><a href="#step-3-install-quarto">Install Quarto</a></li>
+<li><a href="#step-4-set-up-quarto-with-jupyterlab">Set up Quarto with JupyterLab</a></li>
+</ul>
+</blockquote>
+<section id="install-nbdev" class="level3">
+<h3 class="anchored" data-anchor-id="install-nbdev">Install nbdev <a id="step-1-install-nbdev"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>To begin, We start by installing nbdev, which is a Python library that provides a framework for developing libraries and documentation using Jupyter notebooks.</li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install nbdev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="set-up-nbdev" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-nbdev">Set up nbdev <a id="step-2-set-up-nbdev"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>After installing nbdev, we need to set it up for our project. This involves creating the necessary folder structure and configuration files.</li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<ul>
+<li>After installing nbdev, we need to set it up for our project.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>The nbdev_new command creates the necessary folder structure and configuration files for nbdev. It sets up the project with the required directories, such as docs, nbs, tests, and your_project_name.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Make sure to replace your_project_name with the desired name for your nbdev project.</li>
+</ul>
+</blockquote>
+</section>
+<section id="install-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="install-quarto">Install Quarto <a id="step-3-install-quarto"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>Quarto is a powerful publishing system for creating scientific and technical documents from Jupyter notebooks. Let’s install it now.</li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install quarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="set-up-quarto-with-jupyterlab" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-quarto-with-jupyterlab">Set up Quarto with JupyterLab <a id="step-4-set-up-quarto-with-jupyterlab"></a></h3>
+<blockquote class="blockquote">
+<ul>
+<li>To use Quarto with JupyterLab, we need to install the JupyterLab extension for Quarto.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>This extension integrates Quarto into JupyterLab, allowing you to create and publish documents using Quarto’s features.</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>quarto install <span class="op">--</span>lab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="create-an-empty-github-repo" class="level2">
+<h2 class="anchored" data-anchor-id="create-an-empty-github-repo">Create an Empty GitHub Repo <a id="create-repo"></a></h2>
+<blockquote class="blockquote">
+<p>Before we start working on our nbdev project, we need to create an empty GitHub repository to hold our code and documentation. Follow these steps to create a new GitHub repository:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Open the <a href="https://github.com/new">GitHub web interface</a> in your browser and log in to your account.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Click on the “+” icon in the top-right corner and select “New repository” from the dropdown menu.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Enter a name for your repository and an optional description.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Choose whether you want the repository to be public or private.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Leave the “Initialize this repository with a README” option unchecked.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Click the “Create repository” button to create the empty repository.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>If you still find it difficult, can refer github’s <a href="https://docs.github.com/en/get-started/quickstart/create-a-repo">create new repo</a> page.</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="github-create-new-repo.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">If you’re using the web interface, it should look something like this (with your own repository name and descrpition) before you click “Create Repository”:</figcaption>
+</figure>
+</div>
+</section>
+<section id="initialize-your-repo-with-nbdev" class="level2">
+<h2 class="anchored" data-anchor-id="initialize-your-repo-with-nbdev">Initialize Your Repo with nbdev <a id="initialize-repo"></a></h2>
+<blockquote class="blockquote">
+<p>Now that we have created the GitHub repository, let’s initialize it with nbdev. Follow these steps to initialize your repository:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Open a terminal or command prompt on your local machine.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Navigate to the directory where you want to clone the GitHub repository.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Run the following command to clone the repository:</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the following command to clone the repository:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git clone <span class="op">&lt;</span>repository_url<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This command creates a copy of the repository on your local machine. It will create a new directory with the same name as the repository and download all the files and commit history from the remote repository.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change to the directory of your cloned repository:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This cell changes the working directory to the directory where you have cloned your repository. Replace <repository_directory> with the actual directory path.</repository_directory></p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize your repository with nbdev using the following command:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_new <span class="op">&lt;</span>project_name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This cell initializes your repository with nbdev. Replace <project_name> with the desired name for your project. This command creates the necessary files and folder structure for your nbdev project.</project_name></p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>nbdev_new assumes that your package name is the same as your repo name (with - replaced by _). Use the –lib_name option if that isn’t the case.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Double-check your settings.ini file to ensure that it has all of the correct information.</li>
+</ul>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="github-repo-empty.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">You will be now redirected to your new repo.</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<ul>
+<li>Then commit and push your additions to GitHub:</li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git add .</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git commit <span class="op">-</span>m<span class="st">'Initial commit'</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="enable-github-pages" class="level2">
+<h2 class="anchored" data-anchor-id="enable-github-pages">Enable GitHub Pages <a id="enable-pages"></a></h2>
+<blockquote class="blockquote">
+<p>To enable GitHub Pages for your repository, follow these steps:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Go to your repository’s “Settings” tab.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Scroll down to the “GitHub Pages” section.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Under “Source”, select the “gh-pages” branch from the dropdown menu.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Click the “Save” button.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>GitHub will build your pages and provide you with a URL where you can access your documentation.</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="github-enable-pages.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">You need to enable GitHub Pages for your repo by following the above steps.</figcaption>
+</figure>
+</div>
+</section>
+<section id="check-out-your-workflows" class="level2">
+<h2 class="anchored" data-anchor-id="check-out-your-workflows">Check Out Your Workflows <a id="check-workflows"></a></h2>
+<blockquote class="blockquote">
+<p>nbdev includes predefined workflows for continuous integration (CI) and deploying your documentation to GitHub Pages. The “CI” workflow runs tests and linters on your code whenever you push changes to your repository. The “Deploy to GitHub Pages” workflow builds and deploys your documentation to GitHub Pages.Let’s check out these workflows:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Open the “Actions” tab in your repository on GitHub.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>You will see two workflows: “CI” and “Deploy to GitHub Pages”.</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="github-actions-initial.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">You need to check out your workflows by following the above steps.</figcaption>
+</figure>
+</div>
+</section>
+<section id="check-out-your-docs" class="level2">
+<h2 class="anchored" data-anchor-id="check-out-your-docs">Check Out Your Docs <a id="check-docs"></a></h2>
+<blockquote class="blockquote">
+<p>Once the “Deploy to GitHub Pages” workflow has completed successfully, you can check out your documentation:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Wait for the “pages build and deployment” workflow to complete. You can monitor the progress in the “Actions” tab.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Once the workflow is finished, open your website using the provided URL. This is the URL where your documentation is hosted. You should see your documentation website with the initial content generated by nbdev.</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="github-actions-pages.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">You need to check out your docs by following the above steps.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="nbdev-hello-world-site-initial.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Wait for the workflow run to complete, then open your website. By default it should be available at: https://{user}.github.io/{repo}</figcaption>
+</figure>
+</div>
+</section>
+<section id="set-up-autoreload" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-autoreload">Set up Autoreload <a id="autoreload"></a></h2>
+<blockquote class="blockquote">
+<p>Since you’ll be often updating your modules from one notebook, and using them in another, it’s helpful if your notebook automatically reads in the new modules as soon as the Python file changes. To make this happen, just add these lines to the top of your notebook:</p>
+</blockquote>
+</section>
+<section id="set-up-prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-prerequisites">Set up Prerequisites <a id="prerequisites"></a></h2>
+<blockquote class="blockquote">
+<p>If your module requires other modules as dependencies, you can add those prerequisites to your settings.ini in the requirements section. The requirements should be separated by a space and if the module requires at least or at most a specific version of the requirement this may be specified here, too.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Settings_ini.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">You have to cross check whether the required packages along with their version is mentioned in the requirements of settings.ini file.</figcaption>
+</figure>
+</div>
+</section>
+<section id="make-your-first-edit" class="level2">
+<h2 class="anchored" data-anchor-id="make-your-first-edit">Make Your First Edit <a id="first-edit"></a></h2>
+<blockquote class="blockquote">
+<p>Now, let’s make our first edit to the documentation and see how it updates.</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Install nbdev’s hooks by running the following command in your terminal or command prompt:</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the following command to install nbdev's hooks:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_install_hooks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>The nbdev_install_hooks command is used to install nbdev’s Git hooks in your local repository. Git hooks are scripts that are automatically executed at specific points during the Git workflow.</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>By installing nbdev’s Git hooks, you can automate certain checks and validations before committing or pushing changes to your repository. The pre-commit hook ensures that checks like linting, code formatting, and notebook validation are performed before a commit is made. This helps maintain code quality and ensures that your project adheres to certain standards.</li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_build_lib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This code cell builds the Python library from the Jupyter notebooks in your project. It converts the notebooks into Python modules and places them in the appropriate directory. It also generates an <strong>init</strong>.py file that allows you to import your library’s functions as modules.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the nbdev_export command to create Python modules for your notebooks:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_export</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This code cell runs the nbdev_export command, which creates Python modules for your notebooks. This command converts your notebook code cells into Python modules that can be imported and used by other users of your library.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install your package using pip:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">-</span>e <span class="st">'.[dev]'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This code cell installs your package using the pip install -e command. The -e flag allows you to install the package in editable mode, which means any changes you make to the code will be immediately reflected without needing to reinstall.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_build_docs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>The nbdev_build_docs helps you ensure that your documentation is up to date with the latest changes in your notebooks. It allows you to review the documentation, make any necessary adjustments, and provide a good resource for users to refer to when working with your library or package.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start the preview of your docs using nbdev:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_preview</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This code cell starts the preview of your documentation using the nbdev_preview command. This command launches a local web server that allows you to preview your documentation in a web browser.</p>
+</blockquote>
+</section>
+<section id="edit-00_core.ipynb" class="level2">
+<h2 class="anchored" data-anchor-id="edit-00_core.ipynb">Edit 00_core.ipynb <a id="edit-core"></a></h2>
+<blockquote class="blockquote">
+<p>Let’s now make an edit to the <code>00_core.ipynb</code> notebook, which is the main notebook of our library.</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Open the <code>00_core.ipynb</code> file in Jupyter Notebook.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Update the notebook metadata and default export module according to your library’s needs.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Save the notebook and rerun all cells to export the modules. Your changes will be reflected in the generated Python modules and documentation.</li>
+</ul>
+</blockquote>
+</blockquote>
+</section>
+<section id="add-your-own-function" class="level2">
+<h2 class="anchored" data-anchor-id="add-your-own-function">Add Your Own Function <a id="add-function"></a></h2>
+<blockquote class="blockquote">
+<p>Let’s add a new function to our library. Follow these steps:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Add a new code cell in the <code>00_core.ipynb</code> notebook.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Define your function in the code cell.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Use the <code>#| export</code> directive to specify that this function should be exported.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Save the notebook and rerun all cells to update the modules. Your new function will be available in the generated Python modules and can be imported and used by other users of your library.</li>
+</ul>
+</blockquote>
+</blockquote>
+</section>
+<section id="add-examples-tests-and-docs" class="level2">
+<h2 class="anchored" data-anchor-id="add-examples-tests-and-docs">Add Examples, Tests, and Docs <a id="add-examples-tests-docs"></a></h2>
+<blockquote class="blockquote">
+<p>It’s important to provide examples, tests, and documentation for your library. Follow these steps:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Add regular code cells below your function’s code cell to provide examples of how to use the function.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Add test cells using assertions or the <code>fastcore.test</code> functions to test your function’s behavior.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Include plots, images, or widgets in your examples if desired.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Save the notebook and rerun all cells to update the modules and documentation. Your examples, tests, and documentation will be included in the generated Python modules and documentation.</li>
+</ul>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_total_cost(item_price: <span class="bu">float</span>, <span class="co"># The price of a single item.</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                         quantity: <span class="bu">int</span>, <span class="co"># The quantity of items.  </span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                         discount: <span class="bu">float</span> <span class="op">=</span> <span class="dv">0</span>, <span class="co"># The discount rate as a decimal value. Defaults to 0.</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                         tax_rate: <span class="bu">float</span> <span class="op">=</span> <span class="dv">0</span>, <span class="co"># The tax rate as a decimal value. Defaults to 0.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                        ) <span class="op">-&gt;</span> <span class="bu">float</span>: <span class="co"># The total cost of the items, including any applicable discount and tax.</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Calculate the total cost of an item or items, taking into account the quantity, discount, and tax rate.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Raises:</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">        ValueError: If item_price or quantity is negative.</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item_price <span class="op">&lt;</span> <span class="dv">0</span> <span class="kw">or</span> quantity <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Item price and quantity must be non-negative."</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    subtotal <span class="op">=</span> item_price <span class="op">*</span> quantity</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    total_discount <span class="op">=</span> subtotal <span class="op">*</span> discount</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    total_tax <span class="op">=</span> subtotal <span class="op">*</span> tax_rate</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    total_cost <span class="op">=</span> subtotal <span class="op">-</span> total_discount <span class="op">+</span> total_tax</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total_cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="calculate_total_cost" class="level3">
+<h3 class="anchored" data-anchor-id="calculate_total_cost">calculate_total_cost</h3>
+<blockquote class="blockquote">
+<pre><code> calculate_total_cost (item_price:float, quantity:int, discount:float=0,
+                       tax_rate:float=0)</code></pre>
+</blockquote>
+<p>Calculate the total cost of an item or items, taking into account the quantity, discount, and tax rate.</p>
+<p>Raises: ValueError: If item_price or quantity is negative.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>item_price</td>
+<td>float</td>
+<td></td>
+<td>The price of a single item.</td>
+</tr>
+<tr class="even">
+<td>quantity</td>
+<td>int</td>
+<td></td>
+<td>The quantity of items.</td>
+</tr>
+<tr class="odd">
+<td>discount</td>
+<td>float</td>
+<td>0</td>
+<td>The discount rate as a decimal value. Defaults to 0.</td>
+</tr>
+<tr class="even">
+<td>tax_rate</td>
+<td>float</td>
+<td>0</td>
+<td>The tax rate as a decimal value. Defaults to 0.</td>
+</tr>
+<tr class="odd">
+<td><strong>Returns</strong></td>
+<td><strong>float</strong></td>
+<td></td>
+<td><strong>The total cost of the items, including any applicable discount and tax.</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>item_price <span class="op">=</span> <span class="fl">10.99</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>quantity <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>discount <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>tax_rate <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>total_cost <span class="op">=</span> calculate_total_cost(item_price, quantity, discount, tax_rate)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>total_cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="prepare-your-changes" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-your-changes">Prepare Your Changes <a id="prepare-changes"></a></h2>
+<blockquote class="blockquote">
+<p>Before committing your changes, it’s a good practice to run the <code>nbdev_prepare</code> command in the terminal or command prompt. This command performs several tasks to prepare your repository:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Builds the <code>.py</code> modules from the notebooks.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Runs tests on the notebooks.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Cleans the notebooks.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Updates the <code>README.md</code> file with the contents of the <code>index.ipynb</code> notebook.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Run the following command to prepare your changes:</p>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the following command to prepare your changes:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_prepare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This code cell runs the nbdev_prepare command in the terminal or command prompt. This command performs several actions, including building the .py modules, testing the notebooks, cleaning the notebooks, and updating the README.md file.</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>The nbdev_prepare command performs a series of tasks to prepare your nbdev project for a commit. It ensures that your project is in a clean and organized state before you push your changes to the remote repository. The nbdev_prepare command includes the following commands:</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>nbdev_build_lib: This command converts the Jupyter notebooks in your project into Python modules. It creates .py files for each notebook and places them in the appropriate project directories. This step is crucial for making your code accessible as importable modules.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>nbdev_clean_nbs: This command removes unnecessary metadata from your Jupyter notebooks. It cleans up the notebooks by removing execution counts, cell outputs, and other metadata that is not relevant for code distribution or documentation. This step helps keep your notebooks clean and focused on the code and documentation content.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>nbdev_diff_nbs: This command compares the notebook code cells with the corresponding Python modules to detect any inconsistencies. It identifies any code changes in the notebooks that have not been reflected in the Python modules. This step helps ensure that your code is synchronized between the notebooks and the modules.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>nbdev_fix_merge: This command helps resolve merge conflicts that may arise when working with notebooks and modules in a collaborative environment. It applies the necessary fixes to merge conflicts, allowing you to reconcile changes from different branches or contributors.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>nbdev_install_git_hooks: This command installs Git hooks in your project repository. Git hooks are scripts that are executed at specific points in the Git workflow, such as before committing or before pushing. These hooks can perform actions like running tests, linting code, or checking for code formatting. Installing Git hooks helps automate these checks and ensures that code quality standards are maintained.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>By running the nbdev_prepare command, you ensure that your project is properly built, cleaned, and synchronized, and that it adheres to the necessary Git workflow and quality checks. It sets your project up for a successful commit and push to the remote repository.</li>
+</ul>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit your changes using Git:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git add .</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git commit <span class="op">-</span>m <span class="st">"Add my new function and examples"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Push your changes to GitHub:</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>git push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>This code cell performs the Git commands to commit and push your changes to the remote repository. It adds all the modified files (git add .), commits the changes with a message (git commit -m “Update documentation”), and pushes the changes to the main branch of the remote repository (git push origin main).</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>After pushing your changes, three actions will be performed: deployment, CI, and GitHub Pages.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>If all three actions are successful, your commit is successful, and you can view your deployment at the provided URL.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Common errors that could be encountered include the “No module found” error, which happens when a developer forgets to add dependencies in the settings.ini file. Make sure to double-check and update the settings.ini file with the required dependencies for your project. It’s highlighted in the settings.ini image above.</li>
+</ul>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="hide.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Code for nbdev_export.</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<ul>
+<li><code>#| hide</code> is a directive (like <code>#| default_exp</code>) which excludes a cell from both your exported module and docs</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li><a href="https://nbdev.fast.ai/api/doclinks.html#nbdev_export">nbdev_export</a> is the command used to export your notebooks to Python modules.</li>
+</ul>
+</blockquote>
+</section>
+<section id="common-errors-and-their-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="common-errors-and-their-solutions">Common Errors and their Solutions <a id="error"></a></h2>
+<blockquote class="blockquote">
+<p>Here are a few common errors that you may encounter while working on documentation using nbdev, along with their solutions:</p>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Import Errors: This error occurs when you try to import a module or function that is not properly defined or not present in the generated Python modules. It can happen if you forget to add the #| export directive to the code cell containing the function or if there is a typo in the import statement.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Solution: Double-check that the code cell defining the function has the #| export directive. Also, verify that the import statement in the notebook or in other modules is correctly referencing the function from the generated Python modules.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Build Failures: Sometimes, during the nbdev_build_lib step, you may encounter build failures due to syntax errors, unresolved dependencies, or incompatible code.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Solution: Review the error message to identify the cause of the build failure. Check for syntax errors in your code, ensure that all required dependencies are specified in the settings.ini file, and resolve any compatibility issues. Once you fix the errors, run nbdev_build_lib again.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Documentation Formatting Issues: If you encounter issues with the formatting of your generated documentation, such as incorrect rendering of Markdown cells, missing sections, or broken links, it could be due to incorrect formatting or missing metadata in the notebooks.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Solution: Review your notebooks and ensure that the Markdown cells are properly formatted with appropriate headings, bullet points, and links. Verify that the notebook metadata, such as toc, title, and keywords, are correctly specified. Rerun the necessary cells or notebooks to regenerate the documentation with the correct formatting.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>Failure in Tests: If your tests fail during the nbdev_test_nbs step, it means that the code in your notebooks is not producing the expected output or behavior.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Solution: Review the failed tests and the associated error messages to identify the cause of the failure. Check your code for logical errors, incorrect calculations, or missing assertions. Modify your code or test cases accordingly until the tests pass successfully.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<ul>
+<li>GitHub Action Workflow Errors: While working with GitHub Actions, you may encounter errors related to workflow setup, configuration, or dependency management.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<ul>
+<li>Solution: Review the workflow files (usually located in the .github/workflows directory) and ensure that the configurations are correct. Check for any typos, missing dependencies, or incorrect setup steps. Additionally, refer to the GitHub Actions documentation for troubleshooting guidance specific to your issue.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<p>Remember that thorough testing, careful code review, and attention to detail can help you avoid many common errors. If you encounter any issues, don’t hesitate to refer to the nbdev documentation.</p>
+</blockquote>
+</section>
+<section id="video-tutorial-for-nbdev-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="video-tutorial-for-nbdev-documentation">Video Tutorial for nbdev Documentation <a id="video-tutorial"></a></h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/l7zS8Ld4_iA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
