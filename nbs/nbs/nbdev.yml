@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "nbdev-drift_detection_function"
+  site-url: "https://KamaleshMS.github.io/nbdev-drift_detection_function"
+  description: "Data drift detection function with nbdev"
+  repo-branch: main
+  repo-url: "https://github.com/KamaleshMS/nbdev-drift_detection_function"
